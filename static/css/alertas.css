@@ -1,0 +1,305 @@
+/* =========================================
+   RESUMEN ALERTAS
+========================================= */
+
+.alert-stats-grid{
+
+    display:grid;
+
+    grid-template-columns:
+        repeat(3, 1fr);
+
+    gap:24px;
+
+    margin-bottom:30px;
+}
+
+.alert-stat-card{
+
+    background:#ffffff;
+
+    border-radius:18px;
+
+    padding:24px;
+
+    display:flex;
+
+    align-items:center;
+
+    gap:18px;
+
+    box-shadow:
+        0 4px 15px rgba(
+            0,
+            0,
+            0,
+            .05
+        );
+}
+
+.alert-stat-icon{
+
+    width:55px;
+    height:55px;
+
+    border-radius:14px;
+
+    display:flex;
+    justify-content:center;
+    align-items:center;
+
+    font-size:22px;
+}
+
+.alert-stat-icon.danger{
+
+    background:#FDECEC;
+    color:#DC3545;
+}
+
+.alert-stat-icon.warning{
+
+    background:#FFF4DB;
+    color:#F59E0B;
+}
+
+.alert-stat-icon.success{
+
+    background:#E8F7EE;
+    color:#198754;
+}
+
+.alert-stat-card h4{
+
+    margin:0;
+
+    font-size:15px;
+
+    color:#666;
+}
+
+.alert-stat-card span{
+
+    display:block;
+
+    margin-top:5px;
+
+    font-size:30px;
+
+    font-weight:700;
+
+    color:#1B2B48;
+}
+
+/* =========================================
+   BADGES
+========================================= */
+
+.alert-badge{
+
+    display:inline-block;
+
+    padding:8px 16px;
+
+    border-radius:999px;
+
+    font-size:14px;
+
+    font-weight:600;
+}
+
+.alert-badge-danger{
+
+    background:#FDECEC;
+    color:#DC3545;
+}
+
+.alert-badge-warning{
+
+    background:#FFF4DB;
+    color:#F59E0B;
+}
+
+.alert-badge-info{
+
+    background:#EAF5EE;
+    color:#198754;
+}
+
+.alert-badge-pending{
+
+    background:#FFF4DB;
+    color:#F59E0B;
+}
+
+.alert-badge-success{
+
+    background:#EAF5EE;
+    color:#198754;
+}
+
+/* =========================================
+   BOTON
+========================================= */
+
+.alert-btn-view{
+
+    display:inline-block;
+
+    padding:10px 18px;
+
+    border-radius:10px;
+
+    background:#EAF1FF;
+
+    color:#0E4A8A;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.alert-btn-view:hover{
+
+    background:#D7E6FF;
+}
+
+/* =========================================
+   VACIO
+========================================= */
+
+.alert-empty{
+
+    text-align:center;
+
+    padding:30px;
+}
+
+/* =========================================
+   RESPONSIVE
+========================================= */
+
+@media(max-width:900px){
+
+    .alert-stats-grid{
+
+        grid-template-columns:1fr;
+    }
+}
+
+/* ==================================
+   DETALLE ALERTA
+================================== */
+
+.alert-detail{
+
+    display:flex;
+    flex-direction:column;
+
+    gap:18px;
+}
+
+.detail-row{
+
+    display:flex;
+
+    justify-content:space-between;
+
+    align-items:center;
+
+    padding:14px 0;
+
+    border-bottom:1px solid #eee;
+}
+
+.detail-label{
+
+    font-weight:600;
+
+    color:#555;
+}
+
+.detail-value{
+
+    color:#222;
+}
+
+
+/* ==================================
+   REVISION ALERTA
+================================== */
+
+.radio-group{
+
+    display:flex;
+
+    flex-direction:column;
+
+    gap:15px;
+}
+
+.radio-card{
+
+    display:flex;
+
+    align-items:center;
+
+    gap:12px;
+
+    padding:16px;
+
+    border:1px solid #ddd;
+
+    border-radius:12px;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.radio-card:hover{
+
+    background:#f8f9ff;
+}
+
+
+/* ==================================
+   BOTONES REVISION
+================================== */
+
+.action-buttons{
+
+    display:flex;
+
+    gap:15px;
+
+    margin-top:25px;
+}
+
+.btn-secondary{
+
+    display:inline-flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    padding:12px 20px;
+
+    border-radius:10px;
+
+    background:#f1f1f1;
+
+    color:#444;
+
+    text-decoration:none;
+
+    transition:.3s;
+}
+
+.btn-secondary:hover{
+
+    background:#e5e5e5;
+}

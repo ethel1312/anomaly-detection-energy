@@ -1,0 +1,222 @@
+{% extends "base.html" %}
+
+{% block title %}
+Alertas
+{% endblock %}
+
+{% block page_title %}
+Alertas
+{% endblock %}
+
+{% block content %}
+
+<!-- RESUMEN -->
+
+<div class="alert-stats-grid">
+
+    <div class="alert-stat-card">
+
+        <div class="alert-stat-icon danger">
+            <i class="fa-solid fa-triangle-exclamation"></i>
+        </div>
+
+        <div>
+            <h4>Total alertas</h4>
+            <span>{{ alertas|length }}</span>
+        </div>
+
+    </div>
+
+    <div class="alert-stat-card">
+
+        <div class="alert-stat-icon warning">
+            <i class="fa-solid fa-clock"></i>
+        </div>
+
+        <div>
+            <h4>Pendientes de revisión</h4>
+
+            <span>
+                {{
+                alertas
+                | selectattr("estado", "equalto", "PENDIENTE")
+                | list
+                | length
+                }}
+            </span>
+        </div>
+
+    </div>
+
+    <div class="alert-stat-card">
+
+        <div class="alert-stat-icon success">
+            <i class="fa-solid fa-circle-check"></i>
+        </div>
+
+        <div>
+            <h4>Alertas revisadas</h4>
+
+            <span>
+                {{
+                alertas
+                | selectattr("estado", "equalto", "REVISADA")
+                | list
+                | length
+                }}
+            </span>
+        </div>
+
+    </div>
+
+</div>
+
+
+<div class="page-card">
+
+    <div class="page-header">
+
+        <h2>
+            Alertas generadas
+        </h2>
+
+    </div>
+
+    <p class="page-description">
+        Consumos clasificados como anómalos por el modelo predictivo y que requieren revisión.
+    </p>
+
+    <table class="table-custom">
+
+        <thead>
+
+            <tr>
+                <th>Suministro</th>
+                <th>Probabilidad</th>
+                <th>Prioridad</th>
+                <th>Estado</th>
+                <th>Fecha</th>
+                <th>Acción</th>
+            </tr>
+
+        </thead>
+
+        <tbody>
+
+            {% if alertas %}
+
+                {% for alerta in alertas %}
+
+                <tr>
+
+                    <td>{{ alerta.cons_no }}</td>
+
+                    <td>{{ alerta.probabilidad }}%</td>
+
+                    <td>
+
+                        {% if alerta.prioridad == 'ALTA' %}
+
+                            <span class="alert-badge alert-badge-danger">
+                                Alta
+                            </span>
+
+                        {% elif alerta.prioridad == 'MEDIA' %}
+
+                            <span class="alert-badge alert-badge-warning">
+                                Media
+                            </span>
+
+                        {% else %}
+
+                            <span class="alert-badge alert-badge-info">
+                                Baja
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+
+                        {% if alerta.estado == 'PENDIENTE' %}
+
+                            <span class="alert-badge alert-badge-pending">
+                                Pendiente
+                            </span>
+
+                        {% else %}
+
+                            <span class="alert-badge alert-badge-success">
+                                Revisada
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                    <td>
+                        {{ alerta.fecha_alerta.strftime('%d/%m/%Y') }}
+                    </td>
+
+                    <td>
+
+                        {% if alerta.estado == 'PENDIENTE' %}
+
+                            <a
+                                href="{{ url_for(
+                                    'alerta.revisar_alerta',
+                                    idalerta=alerta.idalerta
+                                ) }}"
+                                class="alert-btn-view"
+                            >
+                                Revisar
+                            </a>
+
+                        {% else %}
+
+                            <a
+                                
+                            >
+                                Ver
+                            </a>
+
+                            <!-- <a
+                                href="{{ url_for(
+                                    'alerta.ver_alerta',
+                                    idalerta=alerta.idalerta
+                                ) }}"
+                                class="alert-btn-view"
+                            >
+                                Ver
+                            </a> -->
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            {% else %}
+
+                <tr>
+
+                    <td colspan="6" class="alert-empty">
+
+                        No existen alertas registradas.
+
+                    </td>
+
+                </tr>
+
+            {% endif %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

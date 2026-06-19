@@ -1,0 +1,329 @@
+/* ======================================
+   TARJETA PRINCIPAL
+====================================== */
+
+.upload-card{
+
+    max-width:1000px;
+
+    margin:auto;
+
+    background:white;
+
+    border-radius:24px;
+
+    padding:45px;
+
+    box-shadow:0 8px 25px rgba(
+        0,
+        0,
+        0,
+        .06
+    );
+}
+
+/* ======================================
+   DESCRIPCIÓN
+====================================== */
+
+.upload-description{
+
+    text-align:center;
+
+    color:#555;
+
+    font-size:18px;
+
+    line-height:1.8;
+
+    margin-bottom:30px;
+}
+
+/* ======================================
+   ERROR
+====================================== */
+
+.error-message{
+
+    background:#fde2e2;
+
+    color:#b42318;
+
+    padding:15px;
+
+    border-radius:12px;
+
+    margin-bottom:20px;
+
+    text-align:center;
+}
+
+/* ======================================
+   DESCARGAR PLANTILLA
+====================================== */
+
+.template-section{
+
+    text-align:center;
+
+    margin-bottom:30px;
+}
+
+.btn-template{
+
+    display:inline-flex;
+
+    align-items:center;
+
+    gap:10px;
+
+    padding:14px 22px;
+
+    border-radius:12px;
+
+    background:#eef4ff;
+
+    color:#0E4A8A;
+
+    text-decoration:none;
+
+    font-weight:600;
+
+    transition:.3s;
+}
+
+.btn-template:hover{
+
+    background:#dce8ff;
+}
+
+/* ======================================
+   INPUT FILE
+====================================== */
+
+#archivo{
+
+    display:none;
+}
+
+/* ======================================
+   ZONA DE CARGA
+====================================== */
+
+.upload-area{
+
+    border:2px dashed #c4cfff;
+
+    border-radius:20px;
+
+    background:#f8f9ff;
+
+    min-height:280px;
+
+    display:flex;
+
+    flex-direction:column;
+
+    justify-content:center;
+
+    align-items:center;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.upload-area:hover{
+
+    background:#eef4ff;
+
+    border-color:#0E4A8A;
+}
+
+/* ======================================
+   ICONO
+====================================== */
+
+.upload-icon{
+
+    width:100px;
+
+    height:100px;
+
+    border-radius:50%;
+
+    background:#e7f1ff;
+
+    display:flex;
+
+    justify-content:center;
+
+    align-items:center;
+
+    margin-bottom:25px;
+
+    font-size:42px;
+
+    color:#0072CE;
+}
+
+/* ======================================
+   TITULO
+====================================== */
+
+.upload-title{
+
+    font-size:30px;
+
+    font-weight:600;
+
+    color:#222;
+
+    margin-bottom:10px;
+}
+
+/* ======================================
+   SUBTITULO
+====================================== */
+
+.upload-subtitle{
+
+    font-size:16px;
+
+    color:#666;
+}
+
+.upload-subtitle span{
+
+    color:#0E4A8A;
+
+    font-weight:700;
+}
+
+/* ======================================
+   ARCHIVO SELECCIONADO
+====================================== */
+
+.selected-file{
+    display:none;
+    margin-top:20px;
+    padding:18px;
+    border-radius:12px;
+    background:#eef4ff;
+    color:#0E4A8A;
+    text-align:left;
+    line-height:1.8;
+}
+
+.file-valid{
+    color:#198754;
+    font-weight:700;
+    margin-bottom:10px;
+}
+
+/* ======================================
+   BOTON PROCESAR
+====================================== */
+
+.btn-process{
+
+    width:100%;
+
+    margin-top:25px;
+
+    padding:18px;
+
+    border:none;
+
+    border-radius:14px;
+
+    background:#0E4A8A;
+
+    color:white;
+
+    font-size:17px;
+
+    font-weight:600;
+
+    cursor:pointer;
+
+    transition:.3s;
+}
+
+.btn-process:hover{
+
+    background:#08386b;
+}
+
+/* ======================================
+   LOADING
+====================================== */
+
+.loading-overlay{
+
+    display:none;
+
+    position:fixed;
+
+    top:0;
+    left:0;
+
+    width:100%;
+    height:100%;
+
+    background:rgba(
+        255,
+        255,
+        255,
+        .85
+    );
+
+    z-index:9999;
+
+    justify-content:center;
+
+    align-items:center;
+
+    flex-direction:column;
+}
+
+.loading-overlay p{
+
+    margin-top:20px;
+
+    color:#0E4A8A;
+
+    font-size:18px;
+
+    font-weight:600;
+}
+
+/* ======================================
+   SPINNER
+====================================== */
+
+.spinner{
+
+    width:65px;
+
+    height:65px;
+
+    border:6px solid #ddd;
+
+    border-top:6px solid #0E4A8A;
+
+    border-radius:50%;
+
+    animation:spin 1s linear infinite;
+}
+
+@keyframes spin{
+
+    from{
+        transform:rotate(0deg);
+    }
+
+    to{
+        transform:rotate(360deg);
+    }
+}

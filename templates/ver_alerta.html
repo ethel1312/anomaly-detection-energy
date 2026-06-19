@@ -1,0 +1,140 @@
+{% extends "base.html" %}
+
+{% block title %}
+Detalle de alerta
+{% endblock %}
+
+{% block page_title %}
+Detalle de alerta
+{% endblock %}
+
+{% block content %}
+
+<h1>Detalle de alerta</h1>
+
+<!-- <div class="page-card">
+
+    <div class="page-header">
+        <h2>Información de la alerta</h2>
+    </div>
+
+    <div class="alert-detail">
+
+        <div class="detail-row">
+            <span class="detail-label">
+                Suministro
+            </span>
+
+            <span class="detail-value">
+                {{ alerta.cons_no }}
+            </span>
+        </div>
+
+        <div class="detail-row">
+            <span class="detail-label">
+                Probabilidad
+            </span>
+
+            <span class="detail-value">
+                {{ alerta.probabilidad }}%
+            </span>
+        </div>
+
+        <div class="detail-row">
+            <span class="detail-label">
+                Prioridad
+            </span>
+
+            <span class="detail-value">
+                {{ alerta.prioridad }}
+            </span>
+        </div>
+
+        <div class="detail-row">
+            <span class="detail-label">
+                Estado
+            </span>
+
+            <span class="detail-value">
+                {{ alerta.estado }}
+            </span>
+        </div>
+
+        <div class="detail-row">
+            <span class="detail-label">
+                Fecha
+            </span>
+
+            <span class="detail-value">
+                {{ alerta.fecha_alerta.strftime('%d/%m/%Y') }}
+            </span>
+        </div>
+
+        <div class="detail-row">
+            <span class="detail-label">
+                Descripción
+            </span>
+
+            <span class="detail-value">
+                {{ alerta.descripcion }}
+            </span>
+        </div>
+
+    </div>
+
+</div>
+
+<div class="page-card">
+
+    <div class="page-header">
+        <h2>Resultado de la revisión</h2>
+    </div>
+
+    <div class="alert-detail">
+
+        <div class="detail-row">
+            <span class="detail-label">
+                Resultado
+            </span>
+
+            <span class="detail-value">
+                {{ alerta.resultado_revision }}
+            </span>
+        </div>
+
+        <div class="detail-row">
+            <span class="detail-label">
+                Observación
+            </span>
+
+            <span class="detail-value">
+                {{ alerta.observacion }}
+            </span>
+        </div>
+
+        <div class="detail-row">
+            <span class="detail-label">
+                Fecha de revisión
+            </span>
+
+            <span class="detail-value">
+                {{ alerta.fecha_revision.strftime('%d/%m/%Y') }}
+            </span>
+        </div>
+
+    </div>
+
+    <div class="action-buttons">
+
+        <a
+            href="{{ url_for('alerta.alertas') }}"
+            class="btn-secondary"
+        >
+            Volver
+        </a>
+
+    </div>
+
+</div> -->
+
+{% endblock %}
