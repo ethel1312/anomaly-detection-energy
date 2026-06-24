@@ -1,0 +1,73 @@
+{% extends "base.html" %}
+
+{% block title %}Historial{% endblock %}
+
+{% block page_title %}
+Historial de análisis
+{% endblock %}
+
+{% block content %}
+
+<div class="page-card">
+
+    <div class="page-header">
+        <h2>Historial de análisis</h2>
+        <button
+            class="btn-primary"
+            onclick="window.location.href='/cargar'"
+        >
+            <i class="fa-solid fa-plus"></i>
+            Nuevo análisis
+        </button>
+    </div>
+
+    <p class="page-description">
+        Consulte los archivos procesados anteriormente y acceda a sus resultados.
+    </p>
+
+    <table class="table-custom">
+
+        <thead>
+            <tr>
+                <th>Archivo</th>
+                <th>Fecha</th>
+                <th>Registros</th>
+                <th>Anomalías</th>
+                <th>% Anomalías</th>
+                <th>Acción</th>
+            </tr> 
+        </thead>
+
+        <tbody>
+
+            {% for fila in analisis %}
+
+            <tr>
+
+                <td>{{ fila.nombre_archivo }}</td>
+                
+                <td>{{ fila.fecha_proceso.strftime('%d/%m/%Y') }}</td>
+
+                <td>{{ fila.total_registros }}</td>
+
+                <td>{{ fila.total_anomalias }}</td>
+
+                <td>{{ fila.porcentaje_anomalias }}%</td>
+
+                <td>
+                    <a href="/historial/{{ fila.idanalisis }}" class="btn-view">
+                        Ver
+                    </a>
+                </td>
+
+            </tr>
+
+            {% endfor %}
+
+        </tbody>
+
+    </table>
+
+</div>
+
+{% endblock %}

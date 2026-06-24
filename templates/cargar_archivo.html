@@ -1,0 +1,104 @@
+{% extends "base.html" %}
+
+{% block title %}Carga de archivo{% endblock %}
+
+{% block page_title %}
+Carga de archivo CSV
+{% endblock %}
+
+{% block content %}
+
+<div class="upload-card">
+
+    <div class="upload-description">
+        Suba un archivo CSV con registros históricos de consumo eléctrico.
+        <br><br>
+        El sistema procesará automáticamente la información y aplicará el modelo XGBoost entrenado para detectar posibles consumos eléctricos anómalos.
+    </div>
+
+    <div class="template-section">
+
+        <a
+            href="/static/plantillas/plantilla_consumo.csv"
+            download
+            class="btn-template"
+        >
+            <i class="fa-solid fa-download"></i>
+            Descargar plantilla CSV
+        </a>
+
+    </div>
+
+    {% if error %}
+    <div id="server-error" class="error-message">
+        {{ error }}
+    </div>
+    {% endif %}
+
+    <form
+        method="POST"
+        enctype="multipart/form-data"
+        id="upload-form"
+    >
+
+        <label for="archivo" class="upload-area">
+
+            <div class="upload-icon">
+                <i class="fa-solid fa-cloud-arrow-up"></i>
+            </div>
+
+            <div class="upload-title">
+                Arrastre o seleccione un archivo
+            </div>
+
+            <div class="upload-subtitle">
+                Formato permitido:
+                <span>CSV</span>
+            </div>
+
+        </label>
+
+        <input
+            type="file"
+            id="archivo"
+            name="archivo"
+            accept=".csv"
+            required
+        >
+
+        <div
+            id="selected-file"
+            class="selected-file"
+        ></div>
+
+        <button
+            type="submit"
+            class="btn-process"
+        >
+            Procesar archivo
+        </button>
+
+    </form>
+
+</div>
+
+<!-- SPINNER -->
+
+<div
+    id="loading"
+    class="loading-overlay"
+>
+
+    <div class="spinner"></div>
+
+    <p>
+        Procesando archivo...
+    </p>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+<script src="/static/js/cargar_archivo.js"></script>
+{% endblock %}

@@ -1,0 +1,212 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{% block title %}ENSA{% endblock %}</title>
+
+    <!-- Font Awesome -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
+
+    <!-- CSS -->
+    <link rel="stylesheet" href="/static/css/header.css">
+    <link rel="stylesheet" href="/static/css/sidebar.css">
+    <link rel="stylesheet" href="/static/css/main.css">
+    <link rel="stylesheet" href="/static/css/cargar_archivo.css">
+    <link rel="stylesheet" href="/static/css/alertas.css">
+    <link rel="stylesheet" href="/static/css/pages.css">
+</head>
+
+<body>
+
+    <header>
+
+        <div class="header-container">
+
+            <div class="header-left">
+
+                <!-- <div class="search-box">
+
+                    <i class="fas fa-search"></i>
+
+                    <input type="text" placeholder="Buscar...">
+
+                </div> -->
+
+            </div>
+
+            <div class="header-right">
+
+                <button class="notification-btn">
+                    <i class="fas fa-bell"></i>
+                </button>
+
+                <div class="user-info">
+
+                    <div class="user-avatar">
+                        <i class="fas fa-user"></i>
+                    </div>
+
+                    <div class="user-details">
+                        <span class="user-name">
+                            Analista
+                        </span>
+
+                        <span class="user-role">
+                            ENSA
+                        </span>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </header>
+
+    <!-- Sidebar -->
+    <aside id="sidebar" class="sidebar">
+
+        <div class="sidebar-logo">
+
+            <img src="/static/img/logo.png" alt="ENSA">
+
+        </div>
+
+        <div class="sidebar-content">
+
+            <div class="menu-section">
+
+                <div class="menu-title">
+                    GENERAL
+                </div>
+
+                <ul class="menu">
+
+                    <li class="menu-item {% if active_page == 'dashboard' %}active{% endif %}"
+                        onclick="window.location.href='/home'">
+
+                        <i class="fas fa-chart-line icon"></i>
+
+                        <span class="text">
+                            Dashboard
+                        </span>
+
+                    </li>
+
+                    <li class="menu-item {% if active_page == 'cargar_archivo' %}active{% endif %}"
+                        onclick="window.location.href='/cargar'">
+
+                        <i class="fas fa-file-upload icon"></i>
+
+                        <span class="text">
+                            Carga de archivo
+                        </span>
+
+                    </li>
+
+                    <li class="menu-item {% if active_page == 'historial' %}active{% endif %}"
+                        onclick="window.location.href='/historial'">
+
+                        <i class="fas fa-list-check icon"></i>
+
+                        <span class="text">
+                            Historial de análisis
+                        </span>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+            <div class="menu-divider"></div>
+
+            <div class="menu-section">
+
+                <div class="menu-title">
+                    ANÁLISIS
+                </div>
+
+                <ul class="menu">
+
+                    <li class="menu-item {% if active_page == 'alertas' %}active{% endif %}"
+                        onclick="window.location.href='/alertas'">
+
+                        <i class="fas fa-bell icon"></i>
+
+                        <span class="text">
+                            Alertas
+                        </span>
+
+                    </li>
+
+                    <li class="menu-item {% if active_page == 'reportes' %}active{% endif %}"
+                        onclick="window.location.href='/reportes'">
+
+                        <i class="fas fa-chart-pie icon"></i>
+
+                        <span class="text">
+                            Reportes
+                        </span>
+
+                    </li>
+
+                    <li class="menu-item {% if active_page == 'rendimiento' %}active{% endif %}"
+                        onclick="window.location.href='/rendimiento'">
+
+                        <i class="fas fa-brain icon"></i>
+
+                        <span class="text">
+                            Rendimiento del modelo
+                        </span>
+
+                    </li>
+
+                    <li class="menu-item {% if active_page == 'reentrenamiento' %}active{% endif %}"
+                        onclick="window.location.href='/reentrenamiento'">
+
+                        <i class="fas fa-rotate icon"></i>
+
+                        <span class="text">
+                            Actualización del modelo
+                        </span>
+
+                    </li>
+
+                </ul>
+
+            </div>
+
+        </div>
+
+        <div class="menu-bottom">
+
+            <li class="menu-item logout" onclick="window.location.href='/'">
+
+                <i class="fas fa-right-from-bracket icon"></i>
+
+                <span class="text">
+                    Cerrar sesión
+                </span>
+
+            </li>
+
+        </div>
+
+    </aside>
+
+    <!-- Contenido principal -->
+    <main id="main-content" class="main-content">
+        {% block content %}{% endblock %}
+    </main>
+
+    <script src="/static/js/sidebar.js"></script>
+
+    {% block extra_js %}{% endblock %}
+
+</body>
+
+</html>

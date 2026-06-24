@@ -1,0 +1,325 @@
+{% extends "base.html" %}
+
+{% block title %}
+Rendimiento del modelo
+{% endblock %}
+
+{% block page_title %}
+Rendimiento del modelo
+{% endblock %}
+
+{% block content %}
+
+<section class="model-page">
+
+    <div class="model-header">
+
+        <div>
+            <h2>
+                Rendimiento del modelo predictivo
+            </h2>
+
+            <p>
+                Indicadores obtenidos durante la validación del modelo utilizado para detectar consumos eléctricos anómalos.
+            </p>
+        </div>
+
+        <div class="model-chip">
+            <i class="fas fa-brain"></i>
+
+            {{ metricas.algoritmo }}
+        </div>
+
+    </div>
+
+    <!-- RESUMEN -->
+
+    <div class="model-summary">
+
+        <div class="model-card model-card-wide">
+
+            <span>
+                Modelo actual
+            </span>
+
+            <h3>
+                {{ metricas.algoritmo }}
+            </h3>
+
+            <p>
+                Modelo entrenado el
+                {{ metricas.fecha_entrenamiento }}.
+                Se aplicó SMOTE para balancear la clase minoritaria y mejorar la detección de anomalías.
+            </p>
+
+        </div>
+
+        <div class="model-card">
+
+            <span>
+                Accuracy
+            </span>
+
+            <strong>
+                {{ "%.2f"|format(metricas.accuracy * 100) }}%
+            </strong>
+
+            <small>
+                Exactitud general del modelo
+            </small>
+
+        </div>
+
+        <div class="model-card">
+
+            <span>
+                Precision
+            </span>
+
+            <strong>
+                {{ "%.2f"|format(metricas.precision * 100) }}%
+            </strong>
+
+            <small>
+                Menor cantidad de falsas alertas
+            </small>
+
+        </div>
+
+        <div class="model-card">
+
+            <span>
+                Recall
+            </span>
+
+            <strong>
+                {{ "%.2f"|format(metricas.recall * 100) }}%
+            </strong>
+
+            <small>
+                Capacidad de detectar anomalías reales
+            </small>
+
+        </div>
+
+        <div class="model-card">
+
+            <span>
+                ROC AUC
+            </span>
+
+            <strong>
+                {{ "%.2f"|format(metricas.roc_auc) }}
+            </strong>
+
+            <small>
+                Separación entre clases
+            </small>
+
+        </div>
+
+    </div>
+
+    <!-- MATRIZ + INDICADORES -->
+
+    <div class="model-grid">
+
+        <!-- MATRIZ DE CONFUSIÓN -->
+
+        <div class="page-card">
+
+            <div class="page-header">
+                <h2>
+                    Matriz de confusión
+                </h2>
+            </div>
+
+            <p class="page-description">
+                Resultado de validación del modelo sobre el conjunto de prueba.
+            </p>
+
+            <div class="confusion-matrix">
+
+                <div class="matrix-axis"></div>
+
+                <div class="matrix-label">
+                    Predicción: Anómalo
+                </div>
+
+                <div class="matrix-label">
+                    Predicción: Normal
+                </div>
+
+                <div class="matrix-label matrix-row">
+                    Real: Anómalo
+                </div>
+
+                <div class="matrix-cell matrix-success">
+
+                    <strong>
+                        {{ metricas.tp }}
+                    </strong>
+
+                    <span>
+                        Verdaderos positivos
+                    </span>
+
+                </div>
+
+                <div class="matrix-cell matrix-error">
+
+                    <strong>
+                        {{ metricas.fn }}
+                    </strong>
+
+                    <span>
+                        Falsos negativos
+                    </span>
+
+                </div>
+
+                <div class="matrix-label matrix-row">
+                    Real: Normal
+                </div>
+
+                <div class="matrix-cell matrix-error">
+
+                    <strong>
+                        {{ metricas.fp }}
+                    </strong>
+
+                    <span>
+                        Falsos positivos
+                    </span>
+
+                </div>
+
+                <div class="matrix-cell matrix-success">
+
+                    <strong>
+                        {{ metricas.tn }}
+                    </strong>
+
+                    <span>
+                        Verdaderos negativos
+                    </span>
+
+                </div>
+
+            </div>
+
+        </div>
+
+        <!-- INDICADORES -->
+
+        <div class="page-card">
+
+            <div class="page-header">
+                <h2>
+                    Indicadores del modelo
+                </h2>
+            </div>
+
+            <div class="business-list">
+
+                <div>
+
+                    <span>
+                        Registros evaluados
+                    </span>
+
+                    <strong>
+                        {{ metricas.total_validacion }}
+                    </strong>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        Anomalías detectadas
+                    </span>
+
+                    <strong>
+                        {{ metricas.anomalias_detectadas }}
+                    </strong>
+
+                </div>
+
+                <div>
+
+                    <span>
+                        Tasa de detección
+                    </span>
+
+                    <strong>
+                        {{ "%.2f"|format(metricas.tasa_deteccion * 100) }}%
+                    </strong>
+
+                </div>
+
+            </div>
+
+            <div class="model-insight">
+
+                <i class="fas fa-circle-check"></i>
+
+                <p>
+                    El uso de SMOTE permitió mejorar la capacidad del modelo para identificar consumos anómalos, reduciendo el impacto del desbalance de clases.
+                </p>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- CONCLUSIONES -->
+
+    <div class="page-card">
+
+        <div class="page-header">
+
+            <h2>
+                Interpretación de resultados
+            </h2>
+
+        </div>
+
+        <div class="performance-insights">
+
+            <div class="insight-success">
+
+                <b>Accuracy:</b>
+
+                El modelo clasifica correctamente el
+                {{ "%.2f"|format(metricas.accuracy * 100) }}%
+                de los registros evaluados.
+
+            </div>
+
+            <div class="insight-info">
+
+                <b>Recall:</b>
+
+                Detecta el
+                {{ "%.2f"|format(metricas.recall * 100) }}%
+                de las anomalías reales presentes en el conjunto de prueba.
+
+            </div>
+
+            <div class="insight-warning">
+
+                <b>Aplicación operativa:</b>
+
+                Los casos identificados como anómalos pueden utilizarse para priorizar inspecciones y auditorías de consumo eléctrico.
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+{% endblock %}

@@ -1,0 +1,15 @@
+{
+    "algoritmo": "XGBoost + SMOTE",
+    "fecha_entrenamiento": "03/06/2026",
+    "accuracy": 0.8868785399622404,
+    "precision": 0.3577759871071716,
+    "recall": 0.40921658986175113,
+    "roc_auc": 0.7994575235854572,
+    "tp": 444,
+    "tn": 10830,
+    "fp": 797,
+    "fn": 641,
+    "total_validacion": 12712,
+    "anomalias_detectadas": 1241,
+    "tasa_deteccion": 0.40921658986175113
+}

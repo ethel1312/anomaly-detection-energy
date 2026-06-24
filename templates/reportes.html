@@ -1,0 +1,63 @@
+{% extends "base.html" %}
+
+{% block title %}Reportes{% endblock %}
+
+{% block page_title %}
+Reportes
+{% endblock %}
+
+{% block content %}
+
+<div class="page-card">
+
+    <div class="page-header">
+
+        <h2>Reportes</h2>
+
+        <button class="btn-primary">
+            Exportar PDF
+        </button>
+
+    </div>
+
+    <p class="page-description">
+        Resumen de análisis realizados y estadísticas generales.
+    </p>
+
+    <div class="stats-grid">
+
+        <div class="stat-card">
+            <span>Total análisis</span>
+            <h3>25</h3>
+        </div>
+
+        <div class="stat-card">
+            <span>Anomalías detectadas</span>
+            <h3>128</h3>
+        </div>
+
+        <div class="stat-card">
+            <span>Normales</span>
+            <h3>542</h3>
+        </div>
+
+        <div class="stat-card">
+            <span>Promedio riesgo</span>
+            <h3>78%</h3>
+        </div>
+
+    </div>
+
+    <div class="chart-placeholder">
+
+        <i class="fas fa-chart-pie"></i>
+
+        <p>
+            Aquí se mostrará el gráfico estadístico.
+        </p>
+
+    </div>
+
+</div>
+
+{% endblock %}
