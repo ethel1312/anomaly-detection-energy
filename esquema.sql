@@ -57,3 +57,15 @@ ADD COLUMN resultado_revision ENUM(
     'FRAUDE_CONFIRMADO',
     'FALSA_ALERTA'
 ) NULL;
+
+ALTER TABLE resultado_prediccion
+ADD COLUMN patron VARCHAR(255);
+
+ALTER TABLE resultado_prediccion
+ADD COLUMN consumo_promedio DECIMAL(10,2);
+
+ALTER TABLE resultado_prediccion
+ADD COLUMN consumo_ratio DECIMAL(10,2);
+
+ALTER TABLE resultado_prediccion
+ADD COLUMN consumo_desviacion DECIMAL(10,2);

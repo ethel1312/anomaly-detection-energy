@@ -1,0 +1,152 @@
+.dashboard-container{
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+}
+
+.dashboard-header h1{
+    margin:0;
+    font-size:38px;
+    color:#111827;
+}
+
+.dashboard-header p{
+    margin-top:8px;
+    color:#6b7280;
+}
+
+.dashboard-cards{
+    display:grid;
+    grid-template-columns:repeat(4,1fr);
+    gap:20px;
+}
+
+.dashboard-card{
+    background:#fff;
+    border-radius:22px;
+    padding:24px;
+    display:flex;
+    align-items:center;
+    gap:18px;
+    box-shadow:0 4px 16px rgba(0,0,0,.05);
+}
+
+.card-icon{
+    width:56px;
+    height:56px;
+    border-radius:50%;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:22px;
+}
+
+.blue{
+    background:#e8f1ff;
+    color:#2563eb;
+}
+
+.red{
+    background:#fee2e2;
+    color:#dc2626;
+}
+
+.green{
+    background:#dcfce7;
+    color:#16a34a;
+}
+
+.yellow{
+    background:#fef3c7;
+    color:#d97706;
+}
+
+.card-label{
+    color:#6b7280;
+    font-size:14px;
+}
+
+.dashboard-card h2{
+    margin:6px 0 0;
+    font-size:36px;
+}
+
+.dashboard-charts{
+    display:grid;
+    grid-template-columns:2fr 1fr;
+    gap:24px;
+}
+
+.dashboard-panel{
+    background:#fff;
+    border-radius:22px;
+    padding:24px;
+    box-shadow:0 4px 16px rgba(0,0,0,.05);
+}
+
+.dashboard-panel h3{
+    margin-bottom:20px;
+    color:#111827;
+}
+
+.chart-box{
+    height:320px;
+}
+
+.dashboard-table{
+    width:100%;
+    border-collapse:collapse;
+}
+
+.dashboard-table thead{
+    background:#f8fafc;
+}
+
+.dashboard-table th{
+    text-align:left;
+    padding:16px;
+    color:#374151;
+}
+
+.dashboard-table td{
+    padding:16px;
+    border-bottom:1px solid #eef2f7;
+}
+
+.badge-danger{
+    background:#fee2e2;
+    color:#dc2626;
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:600;
+}
+
+.badge-success{
+    background:#dcfce7;
+    color:#16a34a;
+    padding:6px 12px;
+    border-radius:999px;
+    font-size:12px;
+    font-weight:600;
+}
+
+@media(max-width:1200px){
+
+    .dashboard-cards{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .dashboard-charts{
+        grid-template-columns:1fr;
+    }
+
+}
+
+@media(max-width:768px){
+
+    .dashboard-cards{
+        grid-template-columns:1fr;
+    }
+
+}

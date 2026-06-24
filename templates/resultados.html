@@ -175,6 +175,7 @@ Resultados de predicción
                 <th>Probabilidad</th>
                 <th>Estado</th>
                 <th>Nivel de riesgo</th>
+                <th>Patrón identificado</th>
             </tr>
 
         </thead>
@@ -241,6 +242,9 @@ Resultados de predicción
 
                     {% endif %}
 
+                </td>
+                <td>
+                    {{ fila.patron }}
                 </td>
 
             </tr>

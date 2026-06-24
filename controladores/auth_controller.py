@@ -15,11 +15,6 @@ def login():
     return render_template("login.html")
 
 
-@auth_bp.route("/home")
-def home():
-    return render_template("home.html")
-
-
 @auth_bp.route("/api")
 def api_inicio():
     return jsonify({

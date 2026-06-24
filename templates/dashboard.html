@@ -1,0 +1,226 @@
+{% extends "base.html" %}
+
+{% block title %}
+Dashboard
+{% endblock %}
+
+{% block content %}
+
+<div class="dashboard-container">
+
+    <div class="dashboard-header">
+
+        <div>
+
+            <h1>
+                Dashboard
+            </h1>
+
+            <p>
+                Resumen general del sistema de detección de anomalías.
+            </p>
+
+        </div>
+
+    </div>
+
+    <!-- KPIs -->
+
+    <div class="dashboard-cards">
+
+        <div class="dashboard-card">
+
+            <div class="card-icon blue">
+                <i class="fas fa-chart-line"></i>
+            </div>
+
+            <div>
+
+                <span class="card-label">
+                    Total análisis
+                </span>
+
+                <h2>
+                    {{ total_analisis }}
+                </h2>
+
+            </div>
+
+        </div>
+
+        <div class="dashboard-card">
+
+            <div class="card-icon red">
+                <i class="fas fa-triangle-exclamation"></i>
+            </div>
+
+            <div>
+
+                <span class="card-label">
+                    Anomalías
+                </span>
+
+                <h2>
+                    {{ total_anomalias }}
+                </h2>
+
+            </div>
+
+        </div>
+
+        <div class="dashboard-card">
+
+            <div class="card-icon green">
+                <i class="fas fa-circle-check"></i>
+            </div>
+
+            <div>
+
+                <span class="card-label">
+                    Normales
+                </span>
+
+                <h2>
+                    {{ total_normales }}
+                </h2>
+
+            </div>
+
+        </div>
+
+        <div class="dashboard-card">
+
+            <div class="card-icon yellow">
+                <i class="fas fa-shield"></i>
+            </div>
+
+            <div>
+
+                <span class="card-label">
+                    Riesgo promedio
+                </span>
+
+                <h2>
+                    {{ promedio_riesgo }}%
+                </h2>
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- GRÁFICOS -->
+
+    <div class="dashboard-charts">
+
+        <div class="dashboard-panel">
+
+            <h3>
+                Distribución de resultados
+            </h3>
+
+            <div class="chart-box">
+                <canvas id="graficoEstado"></canvas>
+            </div>
+
+        </div>
+
+        <div class="dashboard-panel">
+
+            <h3>
+                Alertas por prioridad
+            </h3>
+
+            <div class="chart-box">
+                <canvas id="graficoAlertas"></canvas>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- ÚLTIMOS ANÁLISIS -->
+
+    <div class="dashboard-panel">
+
+        <h3>
+            Últimos análisis realizados
+        </h3>
+
+        <table class="dashboard-table">
+
+            <thead>
+
+                <tr>
+                    <th>Suministro</th>
+                    <th>Probabilidad</th>
+                    <th>Estado</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for item in ultimos_analisis %}
+
+                <tr>
+
+                    <td>{{ item.cons_no }}</td>
+
+                    <td>{{ item.probabilidad }}%</td>
+
+                    <td>
+
+                        {% if item.estado == "ANOMALO" %}
+
+                        <span class="badge-danger">
+                            Anómalo
+                        </span>
+
+                        {% else %}
+
+                        <span class="badge-success">
+                            Normal
+                        </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+</div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+<script>
+
+window.dashboardData = {
+
+    normales: {{ total_normales }},
+    anomalos: {{ total_anomalias }},
+
+    alta: {{ alertas_alta }},
+    media: {{ alertas_media }},
+    baja: {{ alertas_baja }}
+
+};
+
+</script>
+
+<script src="/static/js/dashboard.js"></script>
+
+{% endblock %}

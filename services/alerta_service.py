@@ -40,7 +40,11 @@ def obtener_alerta_por_id(idalerta):
             SELECT
                 a.*,
                 r.cons_no,
-                r.probabilidad
+                r.probabilidad,
+                r.patron,
+                r.consumo_promedio,
+                r.consumo_ratio,
+                r.consumo_desviacion
             FROM alerta a
             INNER JOIN resultado_prediccion r
                 ON a.idresultado = r.idresultado
@@ -97,7 +101,7 @@ def existe_alerta_pendiente(cons_no):
         with connection.cursor() as cursor:
 
             sql = """
-            SELECT COUNT(*)
+            SELECT COUNT(*) AS total
             FROM alerta a
             INNER JOIN resultado_prediccion r
                 ON a.idresultado = r.idresultado
@@ -105,11 +109,14 @@ def existe_alerta_pendiente(cons_no):
             AND a.estado = 'PENDIENTE'
             """
 
-            cursor.execute(sql, (cons_no,))
+            cursor.execute(
+                sql,
+                (cons_no,)
+            )
 
-            total = cursor.fetchone()[0]
+            row = cursor.fetchone()
 
-    return total > 0
+    return row["total"] > 0
 
 def actualizar_alerta(
     idalerta,

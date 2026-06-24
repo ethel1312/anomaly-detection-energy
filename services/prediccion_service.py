@@ -43,12 +43,60 @@ def procesar_archivo(ruta_csv):
         # Generar variables derivadas
         df_features = generar_variables(df)
 
+        # ==========================
+        # PATRONES DE CONSUMO
+        # ==========================
+
+        patrones = []
+
+        for i in range(len(df_features)):
+
+            ratio = df_features.iloc[i]["consumo_ratio"]
+            tendencia = df_features.iloc[i]["consumo_tendencia"]
+            desviacion = df_features.iloc[i]["consumo_desviacion"]
+
+            if ratio >= 2:
+
+                patron = (
+                    "Consumo significativamente superior "
+                    "al promedio histórico"
+                )
+
+            elif desviacion >= 30:
+
+                patron = (
+                    "Alta variabilidad en el consumo"
+                )
+
+            elif tendencia >= 10:
+
+                patron = (
+                    "Incremento progresivo del consumo"
+                )
+
+            elif tendencia <= -10:
+
+                patron = (
+                    "Disminución abrupta del consumo"
+                )
+
+            else:
+
+                patron = (
+                    "Comportamiento atípico detectado"
+                )
+
+            patrones.append(patron)
+
         # Eliminar CONS_NO antes de predecir
         if "CONS_NO" in df_features.columns:
+
             df_modelo = df_features.drop(
                 columns=["CONS_NO"]
             )
+
         else:
+
             df_modelo = df_features
 
         # Validar columnas
@@ -79,6 +127,7 @@ def procesar_archivo(ruta_csv):
         resultado = pd.DataFrame()
 
         if cons_no is not None:
+
             resultado["cons_no"] = cons_no
 
         resultado["prediccion"] = predicciones
@@ -86,6 +135,8 @@ def procesar_archivo(ruta_csv):
         resultado["probabilidad"] = (
             probabilidades.max(axis=1) * 100
         ).round(2)
+
+        resultado["patron"] = patrones
 
         # Etiqueta visual
         resultado["estado"] = resultado[
@@ -95,7 +146,19 @@ def procesar_archivo(ruta_csv):
             if x == 1
             else "NORMAL"
         )
+        
+        resultado["consumo_promedio"] = (
+            df_features["consumo_promedio"]
+        ).round(2)
 
+        resultado["consumo_ratio"] = (
+            df_features["consumo_ratio"]
+        ).round(2)
+
+        resultado["consumo_desviacion"] = (
+            df_features["consumo_desviacion"]
+        ).round(2)
+        
         return {
             "data": resultado.to_dict(
                 orient="records"

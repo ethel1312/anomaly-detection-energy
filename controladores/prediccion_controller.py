@@ -89,7 +89,11 @@ def cargar_archivo():
                 idanalisis=idanalisis,
                 cons_no=fila["cons_no"],
                 probabilidad=fila["probabilidad"],
-                estado=fila["estado"]
+                estado=fila["estado"],
+                patron=fila["patron"],
+                consumo_promedio=fila["consumo_promedio"],
+                consumo_ratio=fila["consumo_ratio"],
+                consumo_desviacion=fila["consumo_desviacion"]
             )
             
             # Generar alerta solamente si es ANÓMALO

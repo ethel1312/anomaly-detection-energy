@@ -1,6 +1,8 @@
 {% extends "base.html" %}
 
-{% block title %}Reportes{% endblock %}
+{% block title %}
+Reportes
+{% endblock %}
 
 {% block page_title %}
 Reportes
@@ -8,56 +10,254 @@ Reportes
 
 {% block content %}
 
-<div class="page-card">
+<div class="report-container">
 
-    <div class="page-header">
+    <div class="report-header">
 
-        <h2>Reportes</h2>
+        <div>
+            <h2>Reportes</h2>
+            <p>
+                Resumen de análisis realizados y estadísticas generales.
+            </p>
+        </div>
 
-        <button class="btn-primary">
+        <button class="btn-export">
             Exportar PDF
         </button>
 
     </div>
 
-    <p class="page-description">
-        Resumen de análisis realizados y estadísticas generales.
-    </p>
+    <!-- TARJETAS -->
 
     <div class="stats-grid">
 
         <div class="stat-card">
-            <span>Total análisis</span>
-            <h3>25</h3>
+
+            <div class="stat-icon blue">
+                <i class="fas fa-chart-line"></i>
+            </div>
+
+            <div class="stat-content">
+                <span class="stat-title">Total análisis</span>
+                <div class="stat-value">
+                    {{ total_analisis }}
+                </div>
+            </div>
+
         </div>
 
         <div class="stat-card">
-            <span>Anomalías detectadas</span>
-            <h3>128</h3>
+
+            <div class="stat-icon red">
+                <i class="fas fa-triangle-exclamation"></i>
+            </div>
+
+            <div class="stat-content">
+                <span class="stat-title">Anomalías detectadas</span>
+                <div class="stat-value">
+                    {{ total_anomalias }}
+                </div>
+            </div>
+
         </div>
 
         <div class="stat-card">
-            <span>Normales</span>
-            <h3>542</h3>
+
+            <div class="stat-icon green">
+                <i class="fas fa-circle-check"></i>
+            </div>
+
+            <div class="stat-content">
+                <span class="stat-title">Normales</span>
+                <div class="stat-value">
+                    {{ total_normales }}
+                </div>
+            </div>
+
         </div>
 
         <div class="stat-card">
-            <span>Promedio riesgo</span>
-            <h3>78%</h3>
+
+            <div class="stat-icon yellow">
+                <i class="fas fa-shield-halved"></i>
+            </div>
+
+            <div class="stat-content">
+                <span class="stat-title">Riesgo promedio</span>
+                <div class="stat-value">
+                    {{ promedio_riesgo }}%
+                </div>
+            </div>
+
         </div>
 
     </div>
 
-    <div class="chart-placeholder">
+    <!-- GRAFICOS -->
 
-        <i class="fas fa-chart-pie"></i>
+    <div class="charts-grid">
 
-        <p>
-            Aquí se mostrará el gráfico estadístico.
-        </p>
+        <div class="card-chart">
+
+            <h3>
+                Distribución Normal vs Anómalo
+            </h3>
+
+            <div class="chart-wrapper">
+                <canvas id="graficoEstado"></canvas>
+            </div>
+
+        </div>
+
+        <div class="card-chart">
+
+            <h3>
+                Alertas por prioridad
+            </h3>
+
+            <div class="chart-wrapper-small">
+                <canvas id="graficoPrioridad"></canvas>
+            </div>
+
+        </div>
+
+    </div>
+
+    <!-- PATRONES -->
+
+    <div class="card-table">
+
+        <h3>
+            Patrones detectados
+        </h3>
+
+        <table class="table-custom">
+
+            <thead>
+
+                <tr>
+                    <th>Patrón</th>
+                    <th>Cantidad</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for item in patrones %}
+
+                <tr>
+
+                    <td>
+
+                        <div class="pattern-cell">
+
+                            <span class="pattern-dot"></span>
+
+                            {{ item.patron }}
+
+                        </div>
+
+                    </td>
+
+                    <td>
+                        {{ item.cantidad }}
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
+
+    </div>
+
+    <!-- TOP 10 -->
+
+    <div class="card-table">
+
+        <h3>
+            Top 10 suministros con mayor riesgo
+        </h3>
+
+        <table class="table-custom">
+
+            <thead>
+
+                <tr>
+                    <th>#</th>
+                    <th>Suministro</th>
+                    <th>Probabilidad</th>
+                    <th>Estado</th>
+                </tr>
+
+            </thead>
+
+            <tbody>
+
+                {% for item in top_riesgo %}
+
+                <tr>
+
+                    <td>{{ loop.index }}</td>
+
+                    <td>
+                        {{ item.cons_no }}
+                    </td>
+
+                    <td>
+                        {{ "%.2f"|format(item.probabilidad) }}%
+                    </td>
+
+                    <td>
+
+                        {% if item.estado == 'ANOMALO' %}
+
+                            <span class="badge-anomalo">
+                                ANÓMALO
+                            </span>
+
+                        {% else %}
+
+                            <span class="badge-normal">
+                                NORMAL
+                            </span>
+
+                        {% endif %}
+
+                    </td>
+
+                </tr>
+
+                {% endfor %}
+
+            </tbody>
+
+        </table>
 
     </div>
 
 </div>
+
+{% endblock %}
+
+{% block extra_js %}
+
+<script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+<script src="https://cdn.jsdelivr.net/npm/chartjs-plugin-datalabels"></script>
+
+<script>
+window.reportesData = {
+    total_normales: {{ total_normales }},
+    total_anomalias: {{ total_anomalias }},
+    alertas_alta: {{ alertas_alta }},
+    alertas_media: {{ alertas_media }},
+    alertas_baja: {{ alertas_baja }}
+};
+</script>
+
+<script src="/static/js/reportes.js"></script>
 
 {% endblock %}

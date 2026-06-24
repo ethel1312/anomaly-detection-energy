@@ -62,6 +62,10 @@ def obtener_resultados_por_analisis(idanalisis):
                     cons_no,
                     probabilidad,
                     estado,
+                    patron,
+                    consumo_promedio,
+                    consumo_ratio,
+                    consumo_desviacion,
                     fecha_registro
                 FROM resultado_prediccion
                 WHERE idanalisis = %s
@@ -124,7 +128,11 @@ def registrar_resultado(
     idanalisis,
     cons_no,
     probabilidad,
-    estado
+    estado,
+    patron,
+    consumo_promedio,
+    consumo_ratio,
+    consumo_desviacion
 ):
 
     connection = obtenerconexion()
@@ -138,10 +146,14 @@ def registrar_resultado(
                     idanalisis,
                     cons_no,
                     probabilidad,
-                    estado
+                    estado,
+                    patron,
+                    consumo_promedio,
+                    consumo_ratio,
+                    consumo_desviacion
                 )
                 VALUES(
-                    %s,%s,%s,%s
+                    %s,%s,%s,%s,%s,%s,%s,%s
                 )
             """
 
@@ -151,7 +163,11 @@ def registrar_resultado(
                     idanalisis,
                     cons_no,
                     probabilidad,
-                    estado
+                    estado,
+                    patron,
+                    consumo_promedio,
+                    consumo_ratio,
+                    consumo_desviacion
                 )
             )
 
