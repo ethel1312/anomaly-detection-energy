@@ -98,24 +98,16 @@ def cargar_archivo():
             
             # Generar alerta solamente si es ANÓMALO
 
-            if fila["estado"] == "ANOMALO":
-                
+            if fila["estado"] == "ANOMALO":               
                 if existe_alerta_pendiente(
                         fila["cons_no"]
-                    ):
-                    
+                    ):                   
                     continue  # Ya existe una alerta pendiente para este cons_no
-
                 if fila["probabilidad"] >= 95:
-
                     prioridad = "ALTA"
-
                 elif fila["probabilidad"] >= 80:
-
                     prioridad = "MEDIA"
-
                 else:
-
                     continue  # No generar alerta para probabilidades menores a 80%
 
                 registrar_alerta(

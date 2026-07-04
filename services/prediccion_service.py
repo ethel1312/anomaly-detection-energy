@@ -133,7 +133,7 @@ def procesar_archivo(ruta_csv):
         resultado["prediccion"] = predicciones
 
         resultado["probabilidad"] = (
-            probabilidades.max(axis=1) * 100
+            probabilidades[:,1] * 100
         ).round(2)
 
         resultado["patron"] = patrones
