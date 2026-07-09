@@ -7,6 +7,7 @@ from controladores.modelo_controller import modelo_bp
 from controladores.alerta_controller import alerta_bp
 from controladores.reporte_controller import reporte_bp
 from controladores.dashboard_controller import dashboard_bp
+from services.alerta_service import contar_alertas_pendientes
 import pandas as pd
 import joblib
 import os
@@ -25,6 +26,14 @@ app.register_blueprint(modelo_bp)
 app.register_blueprint(alerta_bp)
 app.register_blueprint(reporte_bp)
 app.register_blueprint(dashboard_bp)
+
+@app.context_processor
+def inyectar_notificaciones():
+
+    return {
+        "total_alertas_pendientes":
+            contar_alertas_pendientes()
+    }
 
 # Cargar modelo y columnas
 RUTA_MODELO = os.path.join("modelos", "modelo_xgboost.pkl")

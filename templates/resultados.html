@@ -9,30 +9,66 @@ Resultados de predicción
 {% block content %}
 
 <style>
-    .cards-grid {
-        display: grid;
-        grid-template-columns: repeat(4, 1fr);
-        gap: 20px;
-        margin-bottom: 30px;
+    
+    .cards-grid{
+        display:grid;
+        grid-template-columns:repeat(4,1fr);
+        gap:20px;
+        margin-bottom:30px;
     }
 
-    .stat-card {
-        background: white;
-        border-radius: 18px;
-        padding: 25px;
-        box-shadow: 0 6px 20px rgba(0, 0, 0, .06);
+    .stat-card{
+        background:#fff;
+        border-radius:20px;
+        padding:28px;
+        display:flex;
+        align-items:center;
+        gap:22px;
+        box-shadow:0 8px 25px rgba(0,0,0,.06);
     }
 
-    .stat-title {
-        color: #777;
-        font-size: 14px;
+    .stat-icon{
+        width:74px;
+        height:74px;
+        border-radius:50%;
+        display:flex;
+        justify-content:center;
+        align-items:center;
+        font-size:30px;
     }
 
-    .stat-value {
-        font-size: 34px;
-        font-weight: 700;
-        margin-top: 10px;
-        color: #222;
+    .stat-icon.blue{
+        background:#eaf2ff;
+        color:#2563eb;
+    }
+
+    .stat-icon.red{
+        background:#fdeaea;
+        color:#dc3545;
+    }
+
+    .stat-icon.green{
+        background:#e8f8ee;
+        color:#198754;
+    }
+
+    .stat-icon.orange{
+        background:#fff4dd;
+        color:#d97706;
+    }
+
+    .stat-title{
+        color:#666;
+        font-size:15px;
+        font-weight:500;
+        line-height:1.4;
+        margin-bottom:8px;
+    }
+
+    .stat-value{
+        font-size:40px;
+        font-weight:700;
+        color:#222;
     }
 
     .results-card {
@@ -110,46 +146,138 @@ Resultados de predicción
     }
 </style>
 
+<div class="page-header">
+
+    <div>
+
+        <h2>
+            Resultados del análisis
+        </h2>
+
+        <p class="page-description">
+            Visualice el resumen estadístico y los resultados obtenidos del análisis realizado.
+        </p>
+
+    </div>
+
+    <a
+        href="{{ url_for('historial.historial') }}"
+        class="btn-secondary"
+    >
+        <i class="fa-solid fa-arrow-left"></i>
+        Volver al historial
+    </a>
+
+</div>
+
+<div class="summary-card" style="margin-bottom:30px;">
+
+    <div class="summary-item">
+
+        <span>
+            <i class="fa-solid fa-file-csv"></i>
+            Archivo
+        </span>
+
+        <strong>{{ analisis.nombre_archivo }}</strong>
+
+    </div>
+
+    <div class="summary-item">
+
+        <span>
+            <i class="fa-solid fa-calendar-days"></i>
+            Fecha de análisis
+        </span>
+
+        <strong>
+            {{ analisis.fecha_proceso.strftime('%d/%m/%Y') }}
+        </strong>
+
+    </div>
+
+</div>
+
 <div class="cards-grid">
 
     <div class="stat-card">
-        <div class="stat-title">
-            Registros procesados
+
+        <div class="stat-icon blue">
+            <i class="fa-solid fa-file-lines"></i>
         </div>
 
-        <div class="stat-value">
-            {{ total }}
+        <div>
+
+            <div class="stat-title">
+                Registros procesados
+            </div>
+
+            <div class="stat-value">
+                {{ total }}
+            </div>
+
         </div>
+
     </div>
 
     <div class="stat-card">
-        <div class="stat-title">
-            Anomalías detectadas
+
+        <div class="stat-icon red">
+            <i class="fa-solid fa-triangle-exclamation"></i>
         </div>
 
-        <div class="stat-value">
-            {{ anomalos }}
+        <div>
+
+            <div class="stat-title">
+                Anomalías detectadas
+            </div>
+
+            <div class="stat-value">
+                {{ anomalos }}
+            </div>
+
         </div>
+
     </div>
 
     <div class="stat-card">
-        <div class="stat-title">
-            Consumos normales
+
+        <div class="stat-icon green">
+            <i class="fa-solid fa-circle-check"></i>
         </div>
 
-        <div class="stat-value">
-            {{ normales }}
+        <div>
+
+            <div class="stat-title">
+                Consumos normales
+            </div>
+
+            <div class="stat-value">
+                {{ normales }}
+            </div>
+
         </div>
+
     </div>
 
     <div class="stat-card">
-        <div class="stat-title">
-            Riesgo promedio
+
+        <div class="stat-icon orange">
+            <i class="fa-solid fa-shield-halved"></i>
         </div>
 
-        <div class="stat-value">
-            {{ promedio }}%
+        <div>
+
+            <div class="stat-title">
+                Riesgo promedio
+            </div>
+
+            <div class="stat-value">
+                {{ promedio }}%
+            </div>
+
         </div>
+
     </div>
 
 </div>
@@ -159,7 +287,7 @@ Resultados de predicción
     <div class="results-header">
 
         <h3>
-            Resultados obtenidos
+            Resultados por suministro
         </h3>
 
         <input type="text" id="buscar" placeholder="Buscar suministro..." class="search-box">

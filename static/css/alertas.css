@@ -2,6 +2,30 @@
    RESUMEN ALERTAS
 ========================================= */
 
+.alert-container{
+    display:flex;
+    flex-direction:column;
+    gap:24px;
+}
+
+.alert-header{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+}
+
+.alert-header h2{
+    margin:0;
+    font-size:42px;
+    font-weight:700;
+    color:#1f2937;
+}
+
+.alert-header p{
+    margin-top:6px;
+    color:#6b7280;
+}
+
 .page-card{
 
     margin-bottom:32px;

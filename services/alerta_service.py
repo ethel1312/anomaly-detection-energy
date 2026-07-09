@@ -146,3 +146,18 @@ def actualizar_alerta(
             )
 
             connection.commit()
+            
+def contar_alertas_pendientes():
+
+    conexion = obtenerconexion()
+
+    with conexion:
+        with conexion.cursor() as cursor:
+
+            cursor.execute("""
+                SELECT COUNT(*) AS total
+                FROM alerta
+                WHERE estado='PENDIENTE'
+            """)
+
+            return cursor.fetchone()["total"]

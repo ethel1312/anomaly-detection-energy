@@ -147,6 +147,11 @@ def procesar_archivo(ruta_csv):
             else "NORMAL"
         )
         
+        resultado.loc[
+            resultado["estado"] == "NORMAL",
+            "patron"
+        ] = "Comportamiento normal"
+        
         resultado["consumo_promedio"] = (
             df_features["consumo_promedio"]
         ).round(2)

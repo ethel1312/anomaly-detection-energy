@@ -8,22 +8,49 @@ Historial de análisis
 
 {% block content %}
 
-<div class="page-card">
-
-    <div class="page-header">
+<div class="page-header">
+    <div>
         <h2>Historial de análisis</h2>
-        <button
-            class="btn-primary"
-            onclick="window.location.href='/cargar'"
-        >
-            <i class="fa-solid fa-plus"></i>
-            Nuevo análisis
-        </button>
+        <p>
+            Consulte los archivos procesados anteriormente y acceda a sus resultados.
+        </p>
     </div>
 
-    <p class="page-description">
-        Consulte los archivos procesados anteriormente y acceda a sus resultados.
-    </p>
+    <button class="btn-primary" onclick="window.location.href='/cargar'">
+        <i class="fa-solid fa-plus"></i>
+        Nuevo análisis
+    </button>
+</div>
+
+<div class="table-toolbar">
+
+    <form method="GET" class="search-form">
+
+        <div class="search-box">
+
+            <i class="fas fa-search"></i>
+
+            <input id="buscar" type="text" name="buscar" placeholder="Buscar archivo..." value="{{ busqueda }}">
+
+        </div>
+
+        <input type="date" name="fecha" value="{{ fecha }}" class="date-filter">
+
+        <button type="submit" class="btn-primary">
+            Filtrar
+        </button>
+
+        <a href="/historial" class="btn-secondary">
+            Limpiar
+        </a>
+
+    </form>
+
+</div>
+
+{% if analisis %}
+
+<div class="page-card">
 
     <table class="table-custom">
 
@@ -35,7 +62,7 @@ Historial de análisis
                 <th>Anomalías</th>
                 <th>% Anomalías</th>
                 <th>Acción</th>
-            </tr> 
+            </tr>
         </thead>
 
         <tbody>
@@ -45,14 +72,15 @@ Historial de análisis
             <tr>
 
                 <td>{{ fila.nombre_archivo }}</td>
-                
+
                 <td>{{ fila.fecha_proceso.strftime('%d/%m/%Y') }}</td>
 
                 <td>{{ fila.total_registros }}</td>
 
                 <td>{{ fila.total_anomalias }}</td>
 
-                <td>{{ fila.porcentaje_anomalias }}%</td>
+                <!-- <td>{{ fila.porcentaje_anomalias }}%</td> -->
+                <td>{{ "%.2f"|format(fila.porcentaje_anomalias) }}%</td>
 
                 <td>
                     <a href="/historial/{{ fila.idanalisis }}" class="btn-view">
@@ -68,6 +96,46 @@ Historial de análisis
 
     </table>
 
+
+
 </div>
+
+{% else %}
+
+<div class="page-card">
+
+    <div class="empty-state">
+
+        <i class="fas fa-folder-open"></i>
+
+        <h3>No se encontraron resultados</h3>
+
+        <p>
+            No existen análisis que coincidan con los filtros seleccionados.
+        </p>
+
+    </div>
+
+</div>
+
+{% endif %}
+
+<!-- <script>
+
+    document.getElementById("buscar").addEventListener("keyup", function () {
+
+        const texto = this.value.toLowerCase();
+
+        document.querySelectorAll(".table-custom tbody tr").forEach(fila => {
+
+            const archivo = fila.cells[0].textContent.toLowerCase();
+
+            fila.style.display = archivo.includes(texto) ? "" : "none";
+
+        });
+
+    });
+
+</script> -->
 
 {% endblock %}

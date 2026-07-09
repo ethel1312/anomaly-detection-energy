@@ -18,9 +18,16 @@
     <link rel="stylesheet" href="/static/css/pages.css">
     <link rel="stylesheet" href="/static/css/reporte.css">
     <link rel="stylesheet" href="/static/css/dashboard.css">
+    <link rel="stylesheet" href="/static/css/historial.css">
 </head>
 
 <body>
+
+    <script>
+        if (!localStorage.getItem("token")) {
+            window.location.href = "/login";
+        }
+    </script>
 
     <header>
 
@@ -40,9 +47,22 @@
 
             <div class="header-right">
 
-                <button class="notification-btn">
+                <a
+                    href="{{ url_for('alerta.alertas') }}"
+                    class="notification-btn"
+                >
+
                     <i class="fas fa-bell"></i>
-                </button>
+
+                    {% if total_alertas_pendientes > 0 %}
+
+                        <span class="notification-badge">
+                            {{ total_alertas_pendientes }}
+                        </span>
+
+                    {% endif %}
+
+                </a>
 
                 <div class="user-info">
 
@@ -186,7 +206,7 @@
 
         <div class="menu-bottom">
 
-            <li class="menu-item logout" onclick="window.location.href='/'">
+            <li class="menu-item logout" onclick="cerrarSesion()">
 
                 <i class="fas fa-right-from-bracket icon"></i>
 
@@ -206,6 +226,7 @@
     </main>
 
     <script src="/static/js/sidebar.js"></script>
+    <script src="/static/js/login.js"></script>
 
     {% block extra_js %}{% endblock %}
 

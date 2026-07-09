@@ -1,7 +1,7 @@
 {% extends "base.html" %}
 
 {% block title %}
-Detalle de alerta
+Revisar alerta
 {% endblock %}
 
 {% block page_title %}
@@ -10,131 +10,372 @@ Detalle de alerta
 
 {% block content %}
 
-<h1>Detalle de alerta</h1>
-
-<div class="page-card">
+<section class="aleert-section">
 
     <div class="page-header">
-        <h2>Información de la alerta</h2>
+
+        <h2>
+            Detalle de la alerta
+        </h2>
+
     </div>
 
-    <div class="alert-detail">
+    <p class="page-description">
+        Información de la alerta revisada por el analista.
+    </p>
 
-        <div class="detail-row">
-            <span class="detail-label">
-                Suministro
-            </span>
+    <div class="alert-top-grid">
 
-            <span class="detail-value">
-                {{ alerta.cons_no }}
-            </span>
+        <!-- Información -->
+
+        <div class="summary-card">
+
+            <h3>
+                Información del suministro
+            </h3>
+
+            <div class="summary-item">
+
+                <span>Suministro</span>
+
+                <strong>{{ alerta.cons_no }}</strong>
+
+            </div>
+
+            <div class="summary-item">
+
+                <span>Fecha</span>
+
+                <strong>
+                    {{ alerta.fecha_alerta.strftime('%d/%m/%Y') }}
+                </strong>
+
+            </div>
+
+            <div class="summary-item">
+
+                <span>Descripción</span>
+
+                <strong>
+                    {{ alerta.descripcion }}
+                </strong>
+
+            </div>
+
         </div>
 
-        <div class="detail-row">
-            <span class="detail-label">
-                Probabilidad
-            </span>
+        <!-- Evaluación -->
 
-            <span class="detail-value">
-                {{ alerta.probabilidad }}%
-            </span>
+        <div class="summary-card">
+
+            <h3>
+                Evaluación del modelo
+            </h3>
+
+            <div class="kpi-big">
+
+                {{ "%.2f"|format(alerta.probabilidad) }}%
+
+            </div>
+
+            <p>
+                Probabilidad de anomalía
+            </p>
+
+            <div class="summary-badges">
+
+                {% if alerta.prioridad == 'ALTA' %}
+
+                    <span class="badge badge-danger">
+                        Prioridad alta
+                    </span>
+
+                {% elif alerta.prioridad == 'MEDIA' %}
+
+                    <span class="badge badge-warning">
+                        Prioridad media
+                    </span>
+
+                {% else %}
+
+                    <span class="badge badge-info">
+                        Prioridad baja
+                    </span>
+
+                {% endif %}
+
+                {% if alerta.estado == 'PENDIENTE' %}
+
+                    <span class="badge badge-pending">
+                        Pendiente
+                    </span>
+
+                {% else %}
+
+                    <span class="badge badge-success">
+                        Revisada
+                    </span>
+
+                {% endif %}
+
+            </div>
+
         </div>
 
-        <div class="detail-row">
-            <span class="detail-label">
-                Prioridad
-            </span>
+    </div>
 
-            <span class="detail-value">
-                {{ alerta.prioridad }}
-            </span>
+</section>
+
+
+<section class="alert-section">
+
+    <div class="page-header">
+
+        <h2>
+            Análisis del consumo
+        </h2>
+
+    </div>
+
+    <div class="metrics-grid">
+
+        <!-- Promedio -->
+
+        <div class="metric-card">
+
+            <div class="metric-icon blue">
+                <i class="fas fa-chart-line"></i>
+            </div>
+
+            <div class="metric-number">
+                {{ "%.2f"|format(alerta.consumo_promedio) }}
+            </div>
+
+            <div class="metric-title">
+                Promedio histórico
+            </div>
+
+            <div class="metric-description">
+                Promedio de consumo calculado a partir del historial del suministro.
+            </div>
+
         </div>
 
-        <div class="detail-row">
-            <span class="detail-label">
+        <!-- Ratio -->
+
+        <div class="metric-card">
+
+            <div class="metric-icon orange">
+                <i class="fas fa-scale-balanced"></i>
+            </div>
+
+            <div class="metric-number">
+                {{ "%.2f"|format(alerta.consumo_ratio) }}
+            </div>
+
+            <div class="metric-title">
+                Ratio de consumo
+            </div>
+
+            <div class="metric-description">
+
+                El último consumo representa aproximadamente
+
+                <strong>
+
+                    {{ "%.0f"|format(alerta.consumo_ratio * 100) }}%
+
+                </strong>
+
+                del promedio histórico.
+
+            </div>
+
+        </div>
+
+        <!-- Variabilidad -->
+
+        <div class="metric-card">
+
+            <div class="metric-icon red">
+                <i class="fas fa-wave-square"></i>
+            </div>
+
+            <div class="metric-number">
+                {{ "%.2f"|format(alerta.consumo_desviacion) }}
+            </div>
+
+            <div class="metric-title">
+                Variabilidad
+
+            </div>
+
+            <div class="metric-description">
+
+                {% if alerta.consumo_desviacion >= 30 %}
+
+                    Existe una alta variación entre los consumos registrados.
+
+                {% elif alerta.consumo_desviacion >= 15 %}
+
+                    Existe una variación moderada entre los consumos registrados.
+
+                {% else %}
+
+                    El comportamiento del consumo es estable.
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+    <div class="insight-grid">
+
+        <!-- Patrón -->
+
+        <div class="insight-card">
+
+            <h3 class="insight-title">
+
+                <i class="fas fa-triangle-exclamation"></i>
+
+                Patrón detectado
+
+            </h3>
+
+            <div class="insight-text">
+
+                <strong>
+
+                    {{ alerta.patron }}
+
+                </strong>
+
+            </div>
+
+        </div>
+
+        <!-- Interpretación -->
+
+        <div class="insight-card">
+
+            <h3 class="insight-title">
+
+                <i class="fas fa-brain"></i>
+
+                Interpretación automática
+
+            </h3>
+
+            <div class="insight-text">
+
+                {% if alerta.patron == "Consumo significativamente superior al promedio histórico" %}
+
+                    El consumo registrado es considerablemente superior al comportamiento habitual del suministro. El modelo recomienda realizar una inspección debido a la elevada probabilidad de una anomalía.
+
+                {% elif alerta.patron == "Alta variabilidad en el consumo" %}
+
+                    El suministro presenta cambios importantes entre los periodos analizados. La elevada variabilidad respecto al historial indica un comportamiento atípico que requiere revisión.
+
+                {% elif alerta.patron == "Incremento progresivo del consumo" %}
+
+                    El consumo presenta una tendencia creciente respecto a los periodos anteriores. Se recomienda verificar si este incremento corresponde a un comportamiento esperado.
+
+                {% elif alerta.patron == "Disminución abrupta del consumo" %}
+
+                    Se detectó una disminución importante del consumo respecto al historial registrado. Este comportamiento podría estar asociado a una anomalía.
+
+                {% else %}
+
+                    El modelo detectó un comportamiento diferente al patrón histórico del suministro. Se recomienda efectuar una revisión manual.
+
+                {% endif %}
+
+            </div>
+
+        </div>
+
+    </div>
+
+</section>
+
+
+<section class="alert-section">
+
+    <div class="page-header">
+
+        <h2>
+
+            Resultado de la revisión
+
+        </h2>
+
+    </div>
+
+    <div class="summary-card">
+
+        <div class="summary-item">
+
+            <span>
+
                 Estado
+
             </span>
 
-            <span class="detail-value">
+            <strong>
+
                 {{ alerta.estado }}
-            </span>
+
+            </strong>
+
         </div>
 
-        <div class="detail-row">
-            <span class="detail-label">
-                Fecha
-            </span>
+        <div class="summary-item">
 
-            <span class="detail-value">
-                {{ alerta.fecha_alerta.strftime('%d/%m/%Y') }}
-            </span>
-        </div>
+            <span>
 
-        <div class="detail-row">
-            <span class="detail-label">
-                Descripción
-            </span>
-
-            <span class="detail-value">
-                {{ alerta.descripcion }}
-            </span>
-        </div>
-
-    </div>
-
-</div>
-
-<div class="page-card">
-
-    <div class="page-header">
-        <h2>Resultado de la revisión</h2>
-    </div>
-
-    <div class="alert-detail">
-
-        <div class="detail-row">
-            <span class="detail-label">
                 Resultado
+
             </span>
 
-            <span class="detail-value">
-                {{ alerta.resultado_revision }}
-            </span>
-        </div>
+            <strong>
 
-        <div class="detail-row">
-            <span class="detail-label">
-                Observación
-            </span>
+            {% if alerta.resultado_revision == "ANOMALIA_CONFIRMADA" %}
 
-            <span class="detail-value">
-                {{ alerta.observacion }}
-            </span>
-        </div>
+                Fraude confirmado
 
-        <div class="detail-row">
-            <span class="detail-label">
-                Fecha de revisión
-            </span>
+            {% elif alerta.resultado_revision == "FALSA_ALERTA" %}
 
-            <span class="detail-value">
-                {{ alerta.fecha_revision.strftime('%d/%m/%Y') }}
-            </span>
+                Falsa alerta
+
+            {% else %}
+
+                Sin resultado
+
+            {% endif %}
+
+            </strong>
+
         </div>
 
     </div>
 
-    <div class="action-buttons">
+    <div class="review-actions">
 
         <a
             href="{{ url_for('alerta.alertas') }}"
             class="btn-secondary"
         >
+
             Volver
+
         </a>
 
     </div>
 
-</div>
+</section>
 
 {% endblock %}

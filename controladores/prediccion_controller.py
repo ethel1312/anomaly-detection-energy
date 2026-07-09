@@ -4,7 +4,8 @@ import os
 from services.prediccion_service import procesar_archivo
 from services.historial_service import (
     registrar_analisis,
-    registrar_resultado
+    registrar_resultado,
+    obtener_analisis_por_id
 )
 from services.alerta_service import (
     registrar_alerta,
@@ -82,6 +83,8 @@ def cargar_archivo():
             total_anomalias=anomalos,
             porcentaje_anomalias=porcentaje_anomalias
         )
+        
+        analisis = obtener_analisis_por_id(idanalisis)
 
         # Registrar los resultados
         for fila in datos:
@@ -124,6 +127,7 @@ def cargar_archivo():
             anomalos=anomalos,
             normales=normales,
             promedio=promedio,
+            analisis=analisis,
             active_page="resultados"
         )
 

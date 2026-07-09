@@ -8,21 +8,46 @@ Carga de archivo CSV
 
 {% block content %}
 
-<div class="upload-card">
 
-    <div class="upload-description">
-        Suba un archivo CSV con registros históricos de consumo eléctrico.
-        <br><br>
-        El sistema procesará automáticamente la información y aplicará el modelo XGBoost entrenado para detectar posibles consumos eléctricos anómalos.
+
+<div class="page-header">
+
+    <div>
+        <h2>Carga un archivo</h2>
+        <p>
+            Suba un archivo CSV que contenga registros históricos de consumo eléctrico.
+        </p>
+        <p>
+            El sistema procesará automáticamente la información y aplicará un modelo XGBoost 
+            previamente entrenado para detectar posibles casos de hurto de energía.
+        </p>
+    </div>
+
+</div>
+
+<div class="page-card">
+
+    <div class="upload-instructions">
+
+        <h3>Instrucciones de carga</h3>
+
+        <ul>
+            <li>
+                Asegúrese de que el archivo esté en formato CSV.
+            </li>
+            <li>
+                El archivo debe contener los campos requeridos para el análisis.
+            </li>
+            <li>
+                Puede descargar una plantilla CSV para asegurarse de que su archivo cumpla con el formato esperado.
+            </li>
+        </ul>
+
     </div>
 
     <div class="template-section">
 
-        <a
-            href="/static/plantillas/plantilla_consumo.csv"
-            download
-            class="btn-template"
-        >
+        <a href="/static/plantillas/plantilla_consumo.csv" download class="btn-template">
             <i class="fa-solid fa-download"></i>
             Descargar plantilla CSV
         </a>
@@ -35,11 +60,7 @@ Carga de archivo CSV
     </div>
     {% endif %}
 
-    <form
-        method="POST"
-        enctype="multipart/form-data"
-        id="upload-form"
-    >
+    <form method="POST" enctype="multipart/form-data" id="upload-form">
 
         <label for="archivo" class="upload-area">
 
@@ -58,23 +79,11 @@ Carga de archivo CSV
 
         </label>
 
-        <input
-            type="file"
-            id="archivo"
-            name="archivo"
-            accept=".csv"
-            required
-        >
+        <input type="file" id="archivo" name="archivo" accept=".csv" required>
 
-        <div
-            id="selected-file"
-            class="selected-file"
-        ></div>
+        <div id="selected-file" class="selected-file"></div>
 
-        <button
-            type="submit"
-            class="btn-process"
-        >
+        <button type="submit" class="btn-process">
             Procesar archivo
         </button>
 
@@ -82,12 +91,11 @@ Carga de archivo CSV
 
 </div>
 
+
+
 <!-- SPINNER -->
 
-<div
-    id="loading"
-    class="loading-overlay"
->
+<div id="loading" class="loading-overlay">
 
     <div class="spinner"></div>
 

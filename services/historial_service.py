@@ -1,7 +1,10 @@
 from bd import obtenerconexion
 
 
-def listar_analisis():
+def listar_analisis(
+    buscar="",
+    fecha=""
+):
 
     connection = obtenerconexion()
 
@@ -18,10 +21,39 @@ def listar_analisis():
                     porcentaje_anomalias,
                     fecha_proceso
                 FROM analisis
+                WHERE 1=1
+            """
+
+            parametros = []
+
+            if buscar:
+
+                sql += """
+                    AND nombre_archivo LIKE %s
+                """
+
+                parametros.append(
+                    f"%{buscar}%"
+                )
+
+            if fecha:
+
+                sql += """
+                    AND DATE(fecha_proceso) = %s
+                """
+
+                parametros.append(
+                    fecha
+                )
+
+            sql += """
                 ORDER BY fecha_proceso DESC
             """
 
-            cursor.execute(sql)
+            cursor.execute(
+                sql,
+                parametros
+            )
 
             datos = cursor.fetchall()
 

@@ -14,3 +14,8 @@ function toggleSidebar() {
         icon.classList.add("fa-chevron-left");
     }
 }
+
+function cerrarSesion() {
+    localStorage.removeItem("token");
+    window.location.href = "/login";
+}

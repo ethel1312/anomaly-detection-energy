@@ -36,3 +36,4 @@ document.getElementById("loginForm").addEventListener("submit", async function(e
         alert(data.message);
     }
 });
+

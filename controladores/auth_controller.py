@@ -1,4 +1,4 @@
-from flask import Blueprint, request, jsonify, render_template
+from flask import Blueprint, request, jsonify, render_template, redirect
 from flask_jwt_extended import create_access_token, jwt_required, get_jwt_identity
 from services.auth_service import (
     registrar_usuario,
@@ -179,4 +179,6 @@ def api_perfil():
             "message": f"Error al obtener perfil: {str(e)}"
         }), 500
         
-        
+@auth_bp.route("/logout")
+def logout():
+    return redirect("/login")        

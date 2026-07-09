@@ -1,4 +1,4 @@
-from flask import Blueprint, render_template
+from flask import Blueprint, render_template, request
 from services.historial_service import (
     listar_analisis,
     obtener_analisis_por_id,
@@ -13,11 +13,26 @@ historial_bp = Blueprint(
 @historial_bp.route("/historial")
 def historial():
 
-    analisis = listar_analisis()
+    buscar = request.args.get(
+        "buscar",
+        ""
+    )
+
+    fecha = request.args.get(
+        "fecha",
+        ""
+    )
+
+    analisis = listar_analisis(
+        buscar,
+        fecha
+    )
 
     return render_template(
         "historial.html",
         analisis=analisis,
+        buscar=buscar,
+        fecha=fecha,
         active_page="historial"
     )
     
@@ -61,6 +76,7 @@ def detalle_analisis(idanalisis):
 
     return render_template(
         "resultados.html",
+        analisis=analisis, 
         resultados=resultados,
         total=total,
         anomalos=anomalos,
