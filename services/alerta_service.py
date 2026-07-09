@@ -1,7 +1,12 @@
 from bd import obtenerconexion
 
 
-def obtener_alertas():
+def obtener_alertas(
+    prioridad="",
+    estado="",
+    limite=10,
+    offset=0
+):
 
     conexion = obtenerconexion()
 
@@ -19,14 +24,83 @@ def obtener_alertas():
             FROM alerta a
             INNER JOIN resultado_prediccion r
                 ON a.idresultado = r.idresultado
-            ORDER BY a.fecha_alerta DESC
+            WHERE 1=1
             """
 
-            cursor.execute(sql)
+            parametros = []
 
-            alertas = cursor.fetchall()
+            if prioridad:
 
-    return alertas
+                sql += """
+                AND a.prioridad = %s
+                """
+
+                parametros.append(prioridad)
+
+            if estado:
+
+                sql += """
+                AND a.estado = %s
+                """
+
+                parametros.append(estado)
+
+            sql += """
+            ORDER BY a.fecha_alerta DESC
+            LIMIT %s
+            OFFSET %s
+            """
+
+            parametros.append(limite)
+            parametros.append(offset)
+
+            cursor.execute(
+                sql,
+                parametros
+            )
+
+            return cursor.fetchall()
+        
+def contar_alertas(
+    prioridad="",
+    estado=""
+):
+
+    conexion = obtenerconexion()
+
+    with conexion:
+        with conexion.cursor() as cursor:
+
+            sql = """
+            SELECT COUNT(*) AS total
+            FROM alerta
+            WHERE 1=1
+            """
+
+            parametros=[]
+
+            if prioridad:
+
+                sql += """
+                AND prioridad=%s
+                """
+
+                parametros.append(prioridad)
+
+            if estado:
+
+                sql += """
+                AND estado=%s
+                """
+
+                parametros.append(estado)
+
+            cursor.execute(
+                sql,
+                parametros
+            )
+
+            return cursor.fetchone()["total"]
 
 def obtener_alerta_por_id(idalerta):
 
@@ -147,17 +221,34 @@ def actualizar_alerta(
 
             connection.commit()
             
-def contar_alertas_pendientes():
+def contar_alertas_pendientes(
+    prioridad=""
+):
 
     conexion = obtenerconexion()
 
     with conexion:
         with conexion.cursor() as cursor:
 
-            cursor.execute("""
+            sql = """
                 SELECT COUNT(*) AS total
                 FROM alerta
                 WHERE estado='PENDIENTE'
-            """)
+            """
+
+            parametros = []
+
+            if prioridad:
+
+                sql += """
+                AND prioridad=%s
+                """
+
+                parametros.append(prioridad)
+
+            cursor.execute(
+                sql,
+                parametros
+            )
 
             return cursor.fetchone()["total"]

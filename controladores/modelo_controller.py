@@ -20,10 +20,10 @@ def rendimiento():
         active_page="rendimiento"
     )
     
-@modelo_bp.route("/reentrenamiento")
-def reentrenamiento():
+# @modelo_bp.route("/reentrenamiento")
+# def reentrenamiento():
 
-    return render_template(
-        "reentrenamiento.html",
-        active_page="reentrenamiento"
-    )
+#     return render_template(
+#         "reentrenamiento.html",
+#         active_page="reentrenamiento"
+#     )

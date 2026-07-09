@@ -391,6 +391,17 @@ Detalle de alerta
 
         </div>
 
+        <p
+            id="mensajeError"
+            style="
+                display:none;
+                color:#dc3545;
+                margin-top:15px;
+                font-weight:600;
+            ">
+            Debe seleccionar un resultado antes de continuar.
+        </p>
+
         <div class="review-actions">
 
             <a href="/alertas"
@@ -401,7 +412,8 @@ Detalle de alerta
             </a>
 
             <button
-                type="submit"
+                type="button"
+                id="btnGuardarRevision"
                 class="btn-primary">
 
                 Guardar revisión
@@ -413,5 +425,101 @@ Detalle de alerta
     </form>
 
 </section>
+
+<div id="modalConfirmacion" class="modal-overlay">
+
+    <div class="modal-box">
+
+        <div class="modal-icon">
+            <i class="fas fa-circle-question"></i>
+        </div>
+
+        <h3>
+            Confirmar revisión
+        </h3>
+
+        <p>
+            ¿Está seguro de registrar esta revisión?
+            Esta acción cambiará el estado de la alerta a <strong>Revisada</strong>.
+        </p>
+
+        <div class="modal-actions">
+
+            <button
+                type="button"
+                id="cancelarModal"
+                class="btn-secondary">
+
+                Cancelar
+
+            </button>
+
+            <button
+                type="button"
+                id="confirmarModal"
+                class="btn-primary">
+
+                Sí, guardar
+
+            </button>
+
+        </div>
+
+    </div>
+
+</div>
+
+<script>
+
+const form = document.querySelector("form");
+
+const modal = document.getElementById("modalConfirmacion");
+
+const btnGuardar = document.getElementById("btnGuardarRevision");
+
+const btnCancelar = document.getElementById("cancelarModal");
+
+const btnConfirmar = document.getElementById("confirmarModal");
+
+const mensajeError = document.getElementById("mensajeError");
+
+
+btnGuardar.addEventListener("click", function(e){
+
+    e.preventDefault();
+
+    const opcionSeleccionada = document.querySelector(
+        'input[name="resultado_revision"]:checked'
+    );
+
+    if(!opcionSeleccionada){
+
+        mensajeError.style.display = "block";
+
+        return;
+
+    }
+
+    mensajeError.style.display = "none";
+
+    modal.classList.add("show");
+
+});
+
+
+btnCancelar.addEventListener("click", function(){
+
+    modal.classList.remove("show");
+
+});
+
+
+btnConfirmar.addEventListener("click", function(){
+
+    form.submit();
+
+});
+
+</script>
 
 {% endblock %}

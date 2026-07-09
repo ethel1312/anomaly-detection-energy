@@ -4,6 +4,9 @@ const archivoInput =
 const archivoSeleccionado =
     document.getElementById("selected-file");
 
+const btnProcesar =
+    document.getElementById("btnProcesar");
+
 function mostrarError(mensaje){
 
     archivoSeleccionado.style.display = "block";
@@ -26,6 +29,9 @@ archivoInput.addEventListener("change", function(){
     }
 
     if(this.files.length === 0){
+
+        btnProcesar.disabled = true;
+
         return;
     }
 
@@ -38,6 +44,8 @@ archivoInput.addEventListener("change", function(){
             "Archivo vacío"
         );
 
+        btnProcesar.disabled = true;
+
         return;
     }
 
@@ -46,11 +54,15 @@ archivoInput.addEventListener("change", function(){
         !archivo.name
             .toLowerCase()
             .endsWith(".csv")
+        
     ){
 
         mostrarError(
             "Formato incorrecto. Solo se permiten archivos CSV"
         );
+
+        btnProcesar.disabled = true;
+
 
         return;
     }
@@ -93,6 +105,8 @@ archivoInput.addEventListener("change", function(){
                 "Falta la columna CONS_NO"
             );
 
+            btnProcesar.disabled = true;
+
             return;
         }
 
@@ -126,6 +140,7 @@ archivoInput.addEventListener("change", function(){
                 ${registros}
             </div>
         `;
+        btnProcesar.disabled = false;
     };
 
     reader.readAsText(archivo);

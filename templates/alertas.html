@@ -34,7 +34,7 @@ Alertas
 
             <div>
                 <h4>Total alertas</h4>
-                <span>{{ alertas|length }}</span>
+                <span>{{ total_registros }}</span>
             </div>
 
         </div>
@@ -48,14 +48,7 @@ Alertas
             <div>
                 <h4>Pendientes de revisión</h4>
 
-                <span>
-                    {{
-                    alertas
-                    | selectattr("estado", "equalto", "PENDIENTE")
-                    | list
-                    | length
-                    }}
-                </span>
+                <span>{{ pendientes }}</span>
             </div>
 
         </div>
@@ -69,14 +62,7 @@ Alertas
             <div>
                 <h4>Alertas revisadas</h4>
 
-                <span>
-                    {{
-                    alertas
-                    | selectattr("estado", "equalto", "REVISADA")
-                    | list
-                    | length
-                    }}
-                </span>
+                <span>{{ revisadas }}</span>
             </div>
 
         </div>
@@ -86,17 +72,62 @@ Alertas
 
     <div class="page-card">
 
-        <div class="page-header">
+        <div class="table-toolbar">
 
-            <h2>
-                Alertas generadas
-            </h2>
+            <form method="GET" class="search-form">
+
+                <select name="prioridad" class="date-filter">
+
+                    <option value="">
+                        Todas las prioridades
+                    </option>
+
+                    <option value="ALTA"
+                        {% if prioridad == "ALTA" %}selected{% endif %}>
+                        Alta
+                    </option>
+
+                    <option value="MEDIA"
+                        {% if prioridad == "MEDIA" %}selected{% endif %}>
+                        Media
+                    </option>
+
+                    <option value="BAJA"
+                        {% if prioridad == "BAJA" %}selected{% endif %}>
+                        Baja
+                    </option>
+
+                </select>
+
+                <select name="estado" class="date-filter">
+
+                    <option value="">
+                        Todos los estados
+                    </option>
+
+                    <option value="PENDIENTE"
+                        {% if estado == "PENDIENTE" %}selected{% endif %}>
+                        Pendiente
+                    </option>
+
+                    <option value="REVISADA"
+                        {% if estado == "REVISADA" %}selected{% endif %}>
+                        Revisada
+                    </option>
+
+                </select>
+
+                <button type="submit" class="btn-primary">
+                    Filtrar
+                </button>
+
+                <a href="/alertas" class="btn-secondary">
+                    Limpiar
+                </a>
+
+            </form>
 
         </div>
-
-        <p class="page-description">
-            Consumos clasificados como anómalos por el modelo predictivo y que requieren revisión.
-        </p>
 
         <table class="table-custom">
 
@@ -211,7 +242,7 @@ Alertas
 
                         <td colspan="6" class="alert-empty">
 
-                            No existen alertas registradas.
+                            No existen alertas para los filtros seleccionados.
 
                         </td>
 
@@ -222,6 +253,61 @@ Alertas
             </tbody>
 
         </table>
+
+    </div>
+
+    <div class="pagination-container">
+
+        <div class="pagination-info">
+
+            Mostrando
+            {{ ((pagina-1) * registros_por_pagina) + 1 }}
+            a
+            {{ [pagina * registros_por_pagina, total_registros] | min }}
+            de
+            {{ total_registros }}
+            registros
+
+        </div>
+
+        <div class="pagination">
+
+            {% if pagina > 1 %}
+
+            <a href="?pagina=1&prioridad={{ prioridad }}&estado={{ estado }}">
+                «
+            </a>
+
+            <a href="?pagina={{ pagina-1 }}&prioridad={{ prioridad }}&estado={{ estado }}">
+                ‹
+            </a>
+
+            {% endif %}
+
+            {% for p in range(1, total_paginas + 1) %}
+
+            <a
+                href="?pagina={{ p }}&prioridad={{ prioridad }}&estado={{ estado }}"
+                class="{% if p==pagina %}active{% endif %}"
+            >
+                {{ "%02d"|format(p) }}
+            </a>
+
+            {% endfor %}
+
+            {% if pagina < total_paginas %}
+
+            <a href="?pagina={{ pagina+1 }}&prioridad={{ prioridad }}&estado={{ estado }}">
+                ›
+            </a>
+
+            <a href="?pagina={{ total_paginas }}&prioridad={{ prioridad }}&estado={{ estado }}">
+                »
+            </a>
+
+            {% endif %}
+
+        </div>
 
     </div>
 

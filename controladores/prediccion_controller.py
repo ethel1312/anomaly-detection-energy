@@ -77,7 +77,7 @@ def cargar_archivo():
 
         # Registrar el análisis
         idanalisis = registrar_analisis(
-            idusuario=1,  # Reemplazar con el ID del usuario autenticado
+            idusuario=1,  
             nombre_archivo=archivo.filename,
             total_registros=total,
             total_anomalias=anomalos,
